@@ -2,7 +2,7 @@
 
 Welcome to Xtribe Games Manager API! This library can be included in your own Xtribe Game Manager. It provides a set of useful tools to enhance creating experiments experience. Please refer to **Manager API** section for details.
 
-Feel free to propose corrections, changes or to request feature that you would find useful. **NB: This is the working repository of the library, containing code not yet released. Please download the last stable version from npm.**
+Feel free to propose corrections, changes or to request feature that you would find useful.
 
 #Include Manager API in your project
 If you already have developed a manager in node.js and you want to use our Xtribe Manager API, install it is very easy.
