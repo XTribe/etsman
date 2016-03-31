@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Manager Test Utility</title>
+
+<style type="text/css">
+
+label {
+	display: block;
+	font-style: italic;	
+	margin-top: 15px;
+}
+</style>
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#testForm").submit(function(event) {
+			event.preventDefault();
+			
+			var params = {};
+			try {
+				params = JSON.parse($("#params").val());
+			} catch (ex) {
+				console.log("params parse error");
+				console.log(ex);
+			}
+			var url = window.location.protocol + "//" + window.location.host;
+			var msg = {
+				'sender' : $("#sender").val(),
+				'topic' : $("#topic").val(),
+				'params' : params,
+				'clientId' : $("#clientId").val(),
+				'instanceId' : $("#instanceId").val()
+			};
+
+			$.post(url, {
+				'message' : JSON.stringify(msg)
+			}, function(data) {
+				$("#response").text(JSON.stringify(data, null, "\t"));
+			}, 'json').fail(function(xhr, textStatus, errorThrown) {
+				console.log(textStatus);
+				console.log(xhr);
+				console.log(errorThrown);
+			});
+
+			return false;
+		});
+
+	});
+</script>
+</head>
+<body>
+<form id="testForm">
+	<label>Sender:</label>
+	<select id="sender">
+		<option selected="selected">system</option>
+		<option>client</option>
+	</select>
+	
+	<label>InstanceId: (integer)</label>
+	<input type="text" id="instanceId" value="1200">
+	
+	<label>ClientId: (hex)</label>
+	<input type="text" id="clientId" value="43e5d2f2ca65">
+	
+	<label>Topic:</label>
+	<input type="text" id="topic" value="ready">
+	
+	<label>Params: (json)</label>
+	<textarea rows="15" cols="100" id="params">
+	{ 
+		"data": 
+		{ 
+			"created": "09-12-2015",
+			"timezone": "Europe/Rome",
+			"birth_date": null,
+			"spoken_languages": ["English", "Italian"],
+			"sex": null,
+			"education": "None",
+			"country": "it"
+		} 
+	} 
+	</textarea>
+	
+	<br>
+	
+	<input type="submit" value="Send Message">
+
+</form>
+<hr>
+<label>Response</label>
+<div id="response" style="white-space: pre-wrap;"></div>
+
+
+</body>
+</html>
