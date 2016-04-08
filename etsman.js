@@ -14,8 +14,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+// ------- DEFAULT SETTINGS - Do not modify these values. Use your own options object passing it to startManager function
 var options = {
-	port : 9000,
+	port : 9000,				//Your manager will be listening on this port E.g.: http://localhost:9000 (or http://yourServerAddress:9000)
 	onClientMessage : null,
 	onPing : null,
 	onInstance : null,
@@ -27,20 +28,22 @@ var options = {
 	onAbort : null,
 	onEnd : null,
 	onError : null,
-
-	monitor : {
-		enabled : false,
-		userName : 'monitor',
-		password : 'abcd1234',
-		dir : 'monitor'
+	monitor : {					//Monitor displays all the chain of messages exchanged between Xtribe, your manager and your clients to let you understand what is going on and to debug your code
+		enabled : false,		//Enable/disable monitor, it will be available by default on this link: http://localhost:9000/monitor (or http://yourServerAddress:yourPort/monitor)
+		customLink : 'monitor'	//You can customize the link to: http://localhost:9000/myMonitor (or http://yourServerAddress:yourPort/myMonitor)
+		//userName : 'monitor',
+		//password : 'abcd1234' // TODO implement passw e user
 	},
-	
-	testSiteDir : null
+	debugSender : {						//Send messages directly to your manager to debug it
+		enabled : false, 				//Enable/disable debug sender, it will be available by default on this link: http://localhost:9000/monitor (or http://yourServerAddress:yourPort/debugSender)
+		customLink : "debugSender" 	    //You can customize the link to: http://localhost:9000/mySender (or http://yourServerAddress:yourPort/mySender)
+	}
 };
+// ------- //
 
 exports.startManager = function(opt) {
 	var defaultOptions = options;
-	options = _.extend({}, defaultOptions, opt);
+	options = _.merge({}, defaultOptions, opt);
 
 	console.info("" + new Date());
 	console.info("+--------------------------------------+");
@@ -116,19 +119,21 @@ exports.startManager = function(opt) {
 		}
 		//response.end();
 	});
-
-	if (options.testSiteDir) {
-		app.use(options.testSiteDir,express.static('node_modules/etsman/testSite')); //node_modules/etsman/
-	}
 	
 	app.listen(options.port);
 	console.info("Server listening on port " + options.port);
 
+	// Starts Debug Sender
+	if (options.debugSender.enabled) {
+		app.use("/"+options.debugSender.customLink,express.static('node_modules/etsman/debugSender'));
+	}
 
-	//app.use(xlogger.express.logger()); // to send all express messages to log
-	app.use(options.monitor.dir, xlogger.webPanel());
+	// Starts Monitor
+	if (options.monitor.enabled){
+		//app.use(xlogger.express.logger()); // to send all express messages to log
+		app.use("/"+options.monitor.customLink, xlogger.webPanel());
+	}
 }
-
 
 function sendClientResponse(message, outMessage, response) {
 	if (_.isString(outMessage))
@@ -155,7 +160,6 @@ function sendClientResponse(message, outMessage, response) {
 	            params:         {}
 	        }, outMessage);
 	}
-	
 	
     response.json(out);
     
