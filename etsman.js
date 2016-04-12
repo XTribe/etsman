@@ -36,7 +36,7 @@ var options = {
 	},
 	debugSender : {						//Send messages directly to your manager to debug it
 		enabled : false, 				//Enable/disable debug sender, it will be available by default on this link: http://localhost:9000/monitor (or http://yourServerAddress:yourPort/debugSender)
-		customLink : "debugSender" 	    //You can customize the link to: http://localhost:9000/mySender (or http://yourServerAddress:yourPort/mySender)
+		customLink : 'debugSender' 	    //You can customize the link to: http://localhost:9000/mySender (or http://yourServerAddress:yourPort/mySender)
 	}
 };
 // ------- //
@@ -45,10 +45,10 @@ exports.startManager = function(opt) {
 	var defaultOptions = options;
 	options = _.merge({}, defaultOptions, opt);
 
-	console.info("" + new Date());
-	console.info("+--------------------------------------+");
-	console.info("|        Manager is starting...        |");
-	console.info("+--------------------------------------+");
+	logToMonitor("" + new Date());
+	logToMonitor("+--------------------------------------+");
+	logToMonitor("|        Manager is starting...        |");
+	logToMonitor("+--------------------------------------+");
 
 	app.post('/', function(request, response) {
 		if (!request.body || !request.body.message) {
@@ -65,7 +65,7 @@ exports.startManager = function(opt) {
 		
 	    message.instanceId = parseInt(message.instanceId || -1, 10);
 	    
-	    logToMonitor("message arrived", message);
+	    logToMonitor("Message arrived", message);
 	    
 	    var messageCopy = _.extend({}, message);
 
@@ -78,7 +78,7 @@ exports.startManager = function(opt) {
 				} else if (err.topic) {
 					outMessage.topic = err.topic;
 				} else {				
-					console.log(err.stack || err);
+					logToMonitor(err.stack || err);
 					outMessage.topic = "error";
 					outMessage.params = err.trace || err;	
 				}
@@ -87,10 +87,18 @@ exports.startManager = function(opt) {
 		};
 
 		if (message.sender == 'system') {
-			var acceptedTopics = {'ping' : options.onPing, 'abort' : options.onAbort, 'drop' : options.onDrop, 
-					'end' : options.onEnd, 'error' : options.onError, 'instance' : options.onInstance, 
-					'join' : options.onJoin, 'leave' : options.onLeave, 'over' : options.onOver, 
-					'ready' : options.onReady };
+			var acceptedTopics = {
+				'ping' : options.onPing, 
+				'instance' : options.onInstance,
+				'join' : options.onJoin,
+				'leave' : options.onLeave,
+				'ready' : options.onReady,
+				'over' : options.onOver,
+				'drop' : options.onDrop,
+				'abort' : options.onAbort,  
+				'end' : options.onEnd, 
+				'error' : options.onError 
+			};
 			
 			if (_.isFunction(acceptedTopics[message.topic])) {
 				try {
@@ -99,7 +107,7 @@ exports.startManager = function(opt) {
 					callback(err);
 				}
 			} else {
-				logToMonitor("no handler defined for system topic " + message.topic);
+				logToMonitor("No handler defined for system topic " + message.topic);
 				response.json({});
 			}
 			
@@ -112,7 +120,7 @@ exports.startManager = function(opt) {
 					callback(err);
 				}
 			} else {
-				logToMonitor("no handler defined for client messages");
+				logToMonitor("No handler defined for client messages");
 				response.json({});
 			}
 			
@@ -121,11 +129,11 @@ exports.startManager = function(opt) {
 	});
 	
 	app.listen(options.port);
-	console.info("Server listening on port " + options.port);
+	logToMonitor("Server listening on port " + options.port);
 
 	// Starts Debug Sender
 	if (options.debugSender.enabled) {
-		app.use("/"+options.debugSender.customLink,express.static('node_modules/etsman/debugSender'));
+		app.use("/"+options.debugSender.customLink,express.static(__dirname+'/debugSender'));
 	}
 
 	// Starts Monitor
@@ -135,6 +143,8 @@ exports.startManager = function(opt) {
 	}
 }
 
+// message: original message arrived to the manager
+// outMessage: reply sent by manager
 function sendClientResponse(message, outMessage, response) {
 	if (_.isString(outMessage))
 		outMessage = {topic : outMessage};
@@ -143,46 +153,59 @@ function sendClientResponse(message, outMessage, response) {
 		
 	var out = {};	
 
+	// TOPIC CORRECTION (just not to be punitive with someone forgetting to add topic to a reply)
+	// If manager message has no topic and original message WAS NOT a system one, set the topic to a default
 	if (!outMessage.topic && message.sender != 'system') {
-		console.log("empty topic");
-		outMessage.topic = "nothingfound";
-		outMessage.params = {};
+		logToMonitor("Warning: Message topic is empty!");
+		outMessage.topic = "noTopicFound";
 	}
+	// If manager message has no topic and original message WAS a system one, set the topic to the original one
+	if (!outMessage.topic && message.sender == 'system') {
+		outMessage.topic = message.topic;
+	};
 	
+	// Enrich the reply with client and instance data and merge possible params
 	if (!isEmpty(outMessage)) {
 		outMessage.instanceId = message.instanceId;
 		outMessage.clientId = message.clientId;
 		
-		out = _.extend({
-	            recipient:      message.sender,
+		out = _.merge({
+	            recipient:      'client',
 	            broadcast:      false,
 	            includeSelf:    true,
 	            params:         {}
 	        }, outMessage);
 	}
-	
-    response.json(out);
-    
-	logToMonitor("sent reply", out);
+
+    response.json(out);    
+	logToMonitor("Sent reply", out);
 }
 
-
 function logToMonitor() {
-	if (!options.monitor.enabled)
-		return;
+	if (!options.monitor.enabled){
+		for (var i = 0; i < arguments.length; i++) {
+			if (_.isFunction(arguments[i]))
+				continue;
 
-	for (var i = 0; i < arguments.length; i++) {
-		if (_.isFunction(arguments[i]))
-			continue;
+			if (_.isObject(arguments[i]))
+				console.info(prettyJson(arguments[i]));
+			else
+				console.info(arguments[i]);
+		}
+	}else{
+		for (var i = 0; i < arguments.length; i++) {
+			if (_.isFunction(arguments[i]))
+				continue;
 
-		if (_.isObject(arguments[i]))
-			console.log(prettyJson(arguments[i]));
-		else
-			console.log(arguments[i]);
+			if (_.isObject(arguments[i]))
+				console.log(prettyJson(arguments[i]));
+			else
+				console.log(arguments[i]);
+		}
 	}
 }
 
-function tryWaterfall(functions, callback1) {
+function tryWaterfall(functions, callback_waterfall) {
 	var newArr = [];
 	_.forEach(functions, function(funct) {
 		var newFunct = function() {
@@ -190,17 +213,17 @@ function tryWaterfall(functions, callback1) {
 				funct.apply(null, arguments);
 			} catch (er) {
 				if (er.userError || er.topic) {
-					return callback1.apply(null, [er]);
+					return callback_waterfall.apply(null, [er]);
 				}
-				console.log("tryWaterfall catch: %s", er.stack || er);
-				console.log("in function: %s", funct);
-				console.log("with arguments: %j", arguments);
-				callback1.apply(null, [er]);
+				logToMonitor("tryWaterfall catch: %s", er.stack || er);
+				logToMonitor("in function: %s", funct);
+				logToMonitor("with arguments: %j", arguments);
+				callback_waterfall.apply(null, [er]);
 			}
 		};
 		newArr.push(newFunct);
 	});
-	async.waterfall(newArr, callback1);
+	async.waterfall(newArr, callback_waterfall);
 
 }
 
@@ -255,7 +278,7 @@ function prettyJson(obj) {
 	return JSON.stringify(obj, null, "\t");
 }
 
-exports.logToMonitor = errIfNull;
+exports.logToMonitor = logToMonitor;
 exports.tryWaterfall = tryWaterfall;
 exports.userError = userError;
 exports.nothingFound = nothingFound;

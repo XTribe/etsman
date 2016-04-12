@@ -1027,7 +1027,8 @@ body .markdown-body
 <li>Run <code>npm-install</code> to install required libraries. This will create a &lsquo;node_modules&rsquo; directory, containing Xtribe Manager Library (etsman) and the libraries it depends on.</li>
 <li>Run <code>node index.js</code> to run your manager.</li>
 <li>Visit *<em><a href="http://localhost:11345/*"><a href="http://localhost:11345/*">http://localhost:11345/*</a></a></em> on your browser to check if it is running. This is the manager URI to provide to Xtribe while publishing the game.</li>
-<li>Modify <strong>index.js</strong> for customizations.<br />
+<li>Modify <strong>index.js</strong> for customizations.</li>
+<li>Check out <strong>examples</strong> directory and take a look to code examples to get started about building your own manager.<br />
 <a name="includeapi"><a/></li>
 </ul>
 <h1 id="include-manager-api-in-your-project"><a name="user-content-include-manager-api-in-your-project" href="#include-manager-api-in-your-project" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Include Manager API in your project</h1>
@@ -1039,10 +1040,10 @@ body .markdown-body
 Please refer to <a href="#managerapi">Manager API</a> section for details about utilities available.<br />
 <a name="managerapi"><a/></p>
 <h1 id="manager-api"><a name="user-content-manager-api" href="#manager-api" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Manager API</h1>
-<p>You can use any of these methods, exported by the library, for your own use. </p>
+<p>You can use any of these methods, exported by the library, for your own use. Remember to check out <strong>examples</strong> directory and take a look to code examples.</p>
 <p>N.B: Your manager will be listening on the URL </p>
 <p><code>http://yourServerAddress:yourPort/</code></p>
-<p>In the following examples, we&rsquo;ll assume &lsquo;yourServerAddress&rsquo; equal to &lsquo;localhost&rsquo; and port to &lsquo;9000&rsquo; just for simplicity sake. Use your own server address and port on your manager!</p>
+<p>In the following documentation, we&rsquo;ll assume &lsquo;yourServerAddress&rsquo; equal to &lsquo;localhost&rsquo; and port to &lsquo;9000&rsquo;, just for simplicity sake. Use your own server address and port for your manager!</p>
 <h1 id="methods"><a name="user-content-methods" href="#methods" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Methods</h1>
 <p><code>startManager(options)</code></p>
 <p>Launch your manager, listening to Xtribe messages. Accept parameters by the optional object &lsquo;options&rsquo;, that can contain several custom settings. Any parameter, not explicitly set, will be resolved with default ones.</p>
@@ -1052,7 +1053,7 @@ Please refer to <a href="#managerapi">Manager API</a> section for details about 
 <li>monitor.customLink (default &lsquo;monitor&rsquo;): you can customize the link to be <a href="http://localhost:9000/myMonitor">http://localhost:9000/myMonitor</a></li>
 <li>debugSender.enabled (default &lsquo;false&rsquo;): true or false to enable/disable the Debug Sender. Debug Sender allows you to send messages directly to your manager to debug it. Debug Sender is available by default on this link: <a href="http://localhost:9000/debugSender">http://localhost:9000/debugSender</a>.</li>
 <li>debugSender.customLink (default &lsquo;monitor&rsquo;): you can customize the link to be <a href="http://localhost:9000/mySender">http://localhost:9000/mySender</a></li>
-<li>onClientMessage, onPing, onInstance, onJoin, onLeave, onReady, onOver, onDrop, onAbort, onEnd, onError: handlers for the various kind of messages. All of the handler functions must receive two parameters: the incoming message and a function to be called on completion.</li>
+<li>onClientMessage, onPing, onInstance, onJoin, onLeave, onReady, onOver, onDrop, onAbort, onEnd, onError: handlers for the various kind of system/experiment messages. All of the handler functions must receive two parameters: the incoming message and a function to be called on completion.</li>
 </ul>
 <p><code>userError(errorString)</code></p>
 <p>Stops execution and sends back a user error</p>

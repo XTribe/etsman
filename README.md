@@ -13,6 +13,7 @@ Feel free to propose corrections, changes or to request feature that you would f
 - Run `node index.js` to run your manager.
 - Visit **http://localhost:11345/** on your browser to check if it is running. This is the manager URI to provide to Xtribe while publishing the game.
 - Modify **index.js** for customizations.
+- Check out **examples** directory and take a look to code examples to get started about building your own manager.
 <a name="includeapi"><a/>
 #Include Manager API in your project
 If you already have developed a manager in node.js and you want to use our Xtribe Manager API, install it is very easy.
@@ -28,13 +29,13 @@ Please refer to [Manager API](#managerapi) section for details about utilities a
 <a name="managerapi"><a/>
 #Manager API
 
-You can use any of these methods, exported by the library, for your own use. 
+You can use any of these methods, exported by the library, for your own use. Remember to check out **examples** directory and take a look to code examples.
 
 N.B: Your manager will be listening on the URL 
 
 `http://yourServerAddress:yourPort/`
 
-In the following examples, we'll assume 'yourServerAddress' equal to 'localhost' and port to '9000' just for simplicity sake. Use your own server address and port on your manager!
+In the following documentation, we'll assume 'yourServerAddress' equal to 'localhost' and port to '9000', just for simplicity sake. Use your own server address and port for your manager!
 
 #Methods
 `startManager(options)`
@@ -46,7 +47,7 @@ Launch your manager, listening to Xtribe messages. Accept parameters by the opti
 - monitor.customLink (default 'monitor'): you can customize the link to be http://localhost:9000/myMonitor
 - debugSender.enabled (default 'false'): true or false to enable/disable the Debug Sender. Debug Sender allows you to send messages directly to your manager to debug it. Debug Sender is available by default on this link: http://localhost:9000/debugSender.
 - debugSender.customLink (default 'monitor'): you can customize the link to be http://localhost:9000/mySender
-- onClientMessage, onPing, onInstance, onJoin, onLeave, onReady, onOver, onDrop, onAbort, onEnd, onError: handlers for the various kind of messages. All of the handler functions must receive two parameters: the incoming message and a function to be called on completion.
+- onClientMessage, onPing, onInstance, onJoin, onLeave, onReady, onOver, onDrop, onAbort, onEnd, onError: handlers for the various kind of system/experiment messages. All of the handler functions must receive two parameters: the incoming message and a function to be called on completion.
 
 `userError(errorString)`
 
