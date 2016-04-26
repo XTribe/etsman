@@ -45,6 +45,7 @@ Launch your manager, listening to Xtribe messages. Accept parameters by the opti
 - port (default '9000'): your manager will be listening on this port. E.g.: http://localhost:9000
 - monitor.enabled (default 'false'): true or false to enable/disable the Debug Monitor. Debug Monitor displays all the chain of messages exchanged between Xtribe, your manager and your clients to let you understand what is going on and to debug your code. Monitor is available by default on this link: http://localhost:9000/monitor
 - monitor.customLink (default 'monitor'): you can customize the link to be http://localhost:9000/myMonitor
+- monitor.verbose (default 'false'): true or false to enable verbose mode to log more debug informations. It will log all messages exchanged between system, manager and clients.
 - debugSender.enabled (default 'false'): true or false to enable/disable the Debug Sender. Debug Sender allows you to send messages directly to your manager to debug it. Debug Sender is available by default on this link: http://localhost:9000/debugSender.
 - debugSender.customLink (default 'monitor'): you can customize the link to be http://localhost:9000/mySender
 - onClientMessage, onPing, onInstance, onJoin, onLeave, onReady, onOver, onDrop, onAbort, onEnd, onError: handlers for the various kind of system/experiment messages. All of the handler functions must receive two parameters: the incoming message and a function to be called on completion.
