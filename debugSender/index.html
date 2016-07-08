@@ -36,17 +36,23 @@ input[type="submit"] {
 	$(function() {
 		$("#testForm").submit(function(event) {
 			event.preventDefault();
+			$("#error").html('');
 			
 			var params = {};
+			var par_tmp =$("#params").val().trim();
+			if (par_tmp.charAt(0)!='{') {
+				par_tmp='{'+par_tmp+'}';
+			};
 			try {
-				params = JSON.parse($("#params").val());
+				params = JSON.parse(par_tmp);
 			} catch (ex) {
-				console.log("params parse error");
-				console.log(ex);
+				$("#error").html('Params parse error: '+ex);
 			}
+
+			
 			var url = window.location.protocol + "//" + window.location.host;
 			var msg = {
-				'sender' : $("#sender").val(),
+				'sender' : $( "#sender option:selected" ).text(),
 				'topic' : $("#topic").val(),
 				'params' : params,
 				'clientId' : $("#clientId").val(),
@@ -57,10 +63,8 @@ input[type="submit"] {
 				'message' : JSON.stringify(msg)
 			}, function(data) {
 				$("#response").text(JSON.stringify(data, null, "\t"));
-			}, 'json').fail(function(xhr, textStatus, errorThrown) {
-				console.log(textStatus);
-				console.log(xhr);
-				console.log(errorThrown);
+			}, 'json').fail(function(xhr, textStatus, errorThrown) {		
+				$("#error_response").html('Error in sending message to manager! '+xhr.responseText+' ');
 			});
 
 			return false;
@@ -81,8 +85,8 @@ input[type="submit"] {
 	    <hr>
 		<label>Sender:</label>
 		<select id="sender">
-			<option selected="selected">system</option>
-			<option>client</option>
+			<option selected="selected">client</option>
+			<option>system</option>
 		</select>
 		
 		<label>InstanceId: (integer)</label>
@@ -96,27 +100,30 @@ input[type="submit"] {
 		
 		<label>Params: (json)</label>
 		<textarea rows="15" cols="100" id="params">
-		{ 
-			"data": 
-			{ 
-				"created": "09-12-2015",
-				"timezone": "Europe/Rome",
-				"birth_date": null,
-				"spoken_languages": ["English", "Italian"],
-				"sex": null,
-				"education": "None",
-				"country": "it"
-			} 
-		} 
+{ 
+	"data": 
+	{ 
+		"created": "09-12-2015",
+		"timezone": "Europe/Rome",
+		"birth_date": null,
+		"spoken_languages": ["English", "Italian"],
+		"sex": null,
+		"education": "None",
+		"country": "it"
+	} 
+} 
 		</textarea>
 		
 		<br>
+		<div id='error'></div>
 		
 		<input type="submit" value="Send Message">
+		
 
 	</form>
 	<hr>
 	<label>Response</label>
+	<div id='error_response'></div>
 	<div id="response" style="white-space: pre-wrap;"></div>
 </div>
 

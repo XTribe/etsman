@@ -10,8 +10,8 @@ Feel free to propose corrections, changes or to request feature that you would f
 - Unzip the file.
 - Open a command-line terminal and change directory to the 'master' directory you just unzipped or copy files in a directory of your choice and change to it.
 - Run `npm-install` to install required libraries. This will create a 'node_modules' directory, containing Xtribe Manager Library (etsman) and the libraries it depends on.
-- Run `node index.js` to run your manager.
-- Visit **http://localhost:11345/** on your browser to check if it is running. This is the manager URI to provide to Xtribe while publishing the game.
+- Run `nodejs index.js` to run your manager.
+- Visit ** http://localhost:11345/ ** on your browser to check if it is running. Please notice that Xtribe needs to reach your manager so start it on a server that is someway reachable, that is having an url address or a fixed ip (e.g.:http://yourServerAddressOrIp:11345/). This is the Manager URI to provide to Xtribe while publishing the game.
 - Modify **index.js** for customizations.
 - Check out **examples** directory and take a look to code examples to get started about building your own manager.
 <a name="includeapi"><a/>
@@ -33,14 +33,30 @@ You can use any of these methods, exported by the library, for your own use. Rem
 
 N.B: Your manager will be listening on the URL 
 
-`http://yourServerAddress:yourPort/`
+`http://yourServerAddressOrIp:yourPort/`
 
-In the following documentation, we'll assume 'yourServerAddress' equal to 'localhost' and port to '9000', just for simplicity sake. Use your own server address and port for your manager!
+In the following documentation, we'll assume 'yourServerAddressOrIp' equal to 'localhost' and port to '9000', just for simplicity sake. Use your own server address and port for your manager!
 
-#Methods
+<a name="managerapi"><a/>
+#How to use examples with my game interface on Xtribe?
+Did you already create your game and user interface on Xtribe, didn't you? Check out our [tutorial](http://xtribe.eu/node/64#XTribe_tutorial:_your_first_game) to create your first game on our platform. Follow ['Publishing the game'](http://xtribe.eu/node/64#Publishing_the_game) and ['User Interface'](http://xtribe.eu/node/64#User_interface) paragraphs instructions. It's easy and quick.
+
+The example managers provided, run as standalone application as you start them:
+
+`nodejs example_name.js`
+
+Every example starts on port 9000+example number (e.g.: 9001 for example 1, 9002 for example 2), so, if you start one of them on your server, it will be running on an url like:
+
+`http://yourServerAddressOrIp:9001`
+
+Copy this url and paste it in 'Manager URI' field in the settings of your game. Now, play your game to see the manager in action. 
+
+Please notice that Xtribe needs to reach your manager so start it on a server that is someway reachable, that is having an url address or a fixed ip (e.g.:http://yourServerAddressOrIp:yourPort/). 
+
+#Utilities
 `startManager(options)`
 
-Launch your manager, listening to Xtribe messages. Accept parameters by the optional object 'options', that can contain several custom settings. Any parameter, not explicitly set, will be resolved with default ones.
+Launch your manager, listening to Xtribe messages. Accepts parameters by the optional object 'options', that can contain several custom settings. Any parameter, not explicitly set, will be resolved with default ones.
 
 - port (default '9000'): your manager will be listening on this port. E.g.: http://localhost:9000
 - monitor.enabled (default 'false'): true or false to enable/disable the Debug Monitor. Debug Monitor displays all the chain of messages exchanged between Xtribe, your manager and your clients to let you understand what is going on and to debug your code. Monitor is available by default on this link: http://localhost:9000/monitor
@@ -49,6 +65,33 @@ Launch your manager, listening to Xtribe messages. Accept parameters by the opti
 - debugSender.enabled (default 'false'): true or false to enable/disable the Debug Sender. Debug Sender allows you to send messages directly to your manager to debug it. Debug Sender is available by default on this link: http://localhost:9000/debugSender.
 - debugSender.customLink (default 'monitor'): you can customize the link to be http://localhost:9000/mySender
 - onClientMessage, onPing, onInstance, onJoin, onLeave, onReady, onOver, onDrop, onAbort, onEnd, onError: handlers for the various kind of system/experiment messages. All of the handler functions must receive two parameters: the incoming message and a function to be called on completion.
+
+`GAMEDATA (global variable)`
+
+The global variable GAMEDATA contains data about your game instances, in JSON format, and gets filled in real-time from the moment the manager is started to the moment it is stopped. GAMEDATA contain these data for each instance of the game:
+
+- instanceId: id of the current instance of the game
+- experimentId: id of the current game
+- created/started/ended/aborted: when the game is created,started,ended or aborted, a timestamp of that event is added in this field. Please refer to ['System Message'](http://xtribe.eu/it/page/xtribe-documentation#System_messages) section in Xtribe documentation, for details about the occurring of these events.
+- players: players data are added (or removed) during Join phase as players 'join' (or 'leave') the game. At 'ready' time, data are updated and enriched, if the option 'Enable user data sending' is enabled in your game. For each player, these data are displayed:
+    
+    - clientId: identifies univocally a player, 
+    - readyTimestamp: timestamp of the moment the player started to play 
+    - player data: eventually delivered by Xtribe, along with the ready message, if you enabled, in your game settings, the option 'Enable user data sending'. Please refer to ['Messages in detail - Ready'](http://xtribe.eu/node/64#messagesindetail) section in Xtribe documentation, for details about these data, and to ['Advanced Options'](http://xtribe.eu/it/page/xtribe-documentation#Advanced_options) section for enabling this setting in your game.
+
+You can access these data by the GAMEDATA variable directly, or using the method getInstanceData(instanceId).
+
+`getInstanceData(instanceId)`
+
+Returns data about the instance identified by the instanceId passed as parameter. Remember that the instanceId of a specific istance of your game is passed as part of almost any Xtribe message received and sent by your manager and client, during that instance lifetime.
+
+`logToMonitor(obj)`
+
+Logs to the Debug Monitor, directly from your manager.
+
+`prettyJson(obj)`
+
+Format an object in a readable JSON format.
 
 `userError(errorString)`
 
@@ -78,15 +121,28 @@ Stops execution and sends back an 'null object' error if the object is strictly 
 
 Checks if an object is empty (returns true or false)
 
-`prettyJson(obj)`
-
-Format an object in a readable JSON
-
 `tryWaterfall(functions, callback)`
 
 Utility function similar to async.waterfall, with exception handling. Runs the tasks array of functions in series, each passing their results to the next in the array. However, if any of the tasks pass an error to their own callback, the next function is not executed, and the main callback is immediately called with the error. (See [Async](https://github.com/caolan/async)) This useful library is included in etsman and exported as etsman.async, so you can use for example etsman.async.each(arr, iteratee, [callback])
+
+`intersectSafe(a, b, count_empty_as_full)`
+
+Calculate intersection between two array a and b leaving them untouched, and returns the resulting array. If count_empty_as_full is set to true, the intersection of a filled array with an empty array returns the filled.
+
+`currentTimestamp()`
+
+Return the current timestamp in Unix Time format (number of milliseconds elapsed since 1 January 1970 00:00:00 UTC). (See [Unix Time](https://en.wikipedia.org/wiki/Unix_time))
+
+`connectToMysqlDb(host,database,user,password)`
+
+Connects to a mysql database. Accepts as parameters:
+host: The hostname of the database you are connecting to ('localhost' if on your machine)
+database: Name of the database to use for this connection
+user: The MySQL user to authenticate as
+password: The password of that MySQL user
+
 <a name="extlib"><a/>
-#External libraries exposed
+#External libraries exported
 Our library export some useful third-party libraries, so you don't have to include them again.
 
 `async`

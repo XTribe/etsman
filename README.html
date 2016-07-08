@@ -1025,8 +1025,8 @@ body .markdown-body
 <li>Unzip the file.</li>
 <li>Open a command-line terminal and change directory to the &lsquo;master&rsquo; directory you just unzipped or copy files in a directory of your choice and change to it.</li>
 <li>Run <code>npm-install</code> to install required libraries. This will create a &lsquo;node_modules&rsquo; directory, containing Xtribe Manager Library (etsman) and the libraries it depends on.</li>
-<li>Run <code>node index.js</code> to run your manager.</li>
-<li>Visit *<em><a href="http://localhost:11345/*"><a href="http://localhost:11345/*">http://localhost:11345/*</a></a></em> on your browser to check if it is running. This is the manager URI to provide to Xtribe while publishing the game.</li>
+<li>Run <code>nodejs index.js</code> to run your manager.</li>
+<li>Visit <strong> <a href="http://localhost:11345/"><a href="http://localhost:11345/">http://localhost:11345/</a></a> </strong> on your browser to check if it is running. Please notice that Xtribe needs to reach your manager so start it on a server that is someway reachable, that is having an url address or a fixed ip (e.g.:http://yourServerAddressOrIp:11345/). This is the Manager URI to provide to Xtribe while publishing the game.</li>
 <li>Modify <strong>index.js</strong> for customizations.</li>
 <li>Check out <strong>examples</strong> directory and take a look to code examples to get started about building your own manager.<br />
 <a name="includeapi"><a/></li>
@@ -1042,19 +1042,51 @@ Please refer to <a href="#managerapi">Manager API</a> section for details about 
 <h1 id="manager-api"><a name="user-content-manager-api" href="#manager-api" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Manager API</h1>
 <p>You can use any of these methods, exported by the library, for your own use. Remember to check out <strong>examples</strong> directory and take a look to code examples.</p>
 <p>N.B: Your manager will be listening on the URL </p>
-<p><code>http://yourServerAddress:yourPort/</code></p>
-<p>In the following documentation, we&rsquo;ll assume &lsquo;yourServerAddress&rsquo; equal to &lsquo;localhost&rsquo; and port to &lsquo;9000&rsquo;, just for simplicity sake. Use your own server address and port for your manager!</p>
-<h1 id="methods"><a name="user-content-methods" href="#methods" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Methods</h1>
+<p><code>http://yourServerAddressOrIp:yourPort/</code></p>
+<p>In the following documentation, we&rsquo;ll assume &lsquo;yourServerAddressOrIp&rsquo; equal to &lsquo;localhost&rsquo; and port to &lsquo;9000&rsquo;, just for simplicity sake. Use your own server address and port for your manager!</p>
+<p><a name="managerapi"><a/></p>
+<h1 id="how-to-use-examples-with-my-game-interface-on-xtribe"><a name="user-content-how-to-use-examples-with-my-game-interface-on-xtribe" href="#how-to-use-examples-with-my-game-interface-on-xtribe" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>How to use examples with my game interface on Xtribe?</h1>
+<p>Did you already create your game and user interface on Xtribe, didn&rsquo;t you? Check out our <a href="http://xtribe.eu/node/64#XTribe_tutorial:_your_first_game">tutorial</a> to create your first game on our platform. Follow <a href="http://xtribe.eu/node/64#Publishing_the_game">&lsquo;Publishing the game&rsquo;</a> and <a href="http://xtribe.eu/node/64#User_interface">&lsquo;User Interface&rsquo;</a> paragraphs instructions. It&rsquo;s easy and quick.</p>
+<p>The example managers provided, run as standalone application as you start them:</p>
+<p><code>nodejs example_name.js</code></p>
+<p>Every example starts on port 9000+example number (e.g.: 9001 for example 1, 9002 for example 2), so, if you start one of them on your server, it will be running on an url like:</p>
+<p><code>http://yourServerAddressOrIp:9001</code></p>
+<p>Copy this url and paste it in &lsquo;Manager URI&rsquo; field in the settings of your game. Now, play your game to see the manager in action. </p>
+<p>Please notice that Xtribe needs to reach your manager so start it on a server that is someway reachable, that is having an url address or a fixed ip (e.g.:http://yourServerAddressOrIp:yourPort/). </p>
+<h1 id="utilities"><a name="user-content-utilities" href="#utilities" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Utilities</h1>
 <p><code>startManager(options)</code></p>
-<p>Launch your manager, listening to Xtribe messages. Accept parameters by the optional object &lsquo;options&rsquo;, that can contain several custom settings. Any parameter, not explicitly set, will be resolved with default ones.</p>
+<p>Launch your manager, listening to Xtribe messages. Accepts parameters by the optional object &lsquo;options&rsquo;, that can contain several custom settings. Any parameter, not explicitly set, will be resolved with default ones.</p>
 <ul>
 <li>port (default &lsquo;9000&rsquo;): your manager will be listening on this port. E.g.: <a href="http://localhost:9000">http://localhost:9000</a></li>
 <li>monitor.enabled (default &lsquo;false&rsquo;): true or false to enable/disable the Debug Monitor. Debug Monitor displays all the chain of messages exchanged between Xtribe, your manager and your clients to let you understand what is going on and to debug your code. Monitor is available by default on this link: <a href="http://localhost:9000/monitor">http://localhost:9000/monitor</a></li>
 <li>monitor.customLink (default &lsquo;monitor&rsquo;): you can customize the link to be <a href="http://localhost:9000/myMonitor">http://localhost:9000/myMonitor</a></li>
+<li>monitor.verbose (default &lsquo;false&rsquo;): true or false to enable verbose mode to log more debug informations. It will log all messages exchanged between system, manager and clients.</li>
 <li>debugSender.enabled (default &lsquo;false&rsquo;): true or false to enable/disable the Debug Sender. Debug Sender allows you to send messages directly to your manager to debug it. Debug Sender is available by default on this link: <a href="http://localhost:9000/debugSender">http://localhost:9000/debugSender</a>.</li>
 <li>debugSender.customLink (default &lsquo;monitor&rsquo;): you can customize the link to be <a href="http://localhost:9000/mySender">http://localhost:9000/mySender</a></li>
 <li>onClientMessage, onPing, onInstance, onJoin, onLeave, onReady, onOver, onDrop, onAbort, onEnd, onError: handlers for the various kind of system/experiment messages. All of the handler functions must receive two parameters: the incoming message and a function to be called on completion.</li>
 </ul>
+<p><code>GAMEDATA (global variable)</code></p>
+<p>The global variable GAMEDATA contains data about your game instances, in JSON format, and gets filled in real-time from the moment the manager is started to the moment it is stopped. GAMEDATA contain these data for each instance of the game:</p>
+<ul>
+<li>instanceId: id of the current instance of the game</li>
+<li>experimentId: id of the current game</li>
+<li>created/started/ended/aborted: when the game is created,started,ended or aborted, a timestamp of that event is added in this field. Please refer to <a href="http://xtribe.eu/it/page/xtribe-documentation#System_messages">&lsquo;System Message&rsquo;</a> section in Xtribe documentation, for details about the occurring of these events.</li>
+<li>
+<p>players: players data are added (or removed) during Join phase as players &lsquo;join&rsquo; (or &lsquo;leave&rsquo;) the game. At &lsquo;ready&rsquo; time, data are updated and enriched, if the option &lsquo;Enable user data sending&rsquo; is enabled in your game. For each player, these data are displayed:</p>
+<ul>
+<li>clientId: identifies univocally a player, </li>
+<li>readyTimestamp: timestamp of the moment the player started to play </li>
+<li>player data: eventually delivered by Xtribe, along with the ready message, if you enabled, in your game settings, the option &lsquo;Enable user data sending&rsquo;. Please refer to <a href="http://xtribe.eu/node/64#messagesindetail">&lsquo;Messages in detail - Ready&rsquo;</a> section in Xtribe documentation, for details about these data, and to <a href="http://xtribe.eu/it/page/xtribe-documentation#Advanced_options">&lsquo;Advanced Options&rsquo;</a> section for enabling this setting in your game.</li>
+</ul>
+</li>
+</ul>
+<p>You can access these data by the GAMEDATA variable directly, or using the method getInstanceData(instanceId).</p>
+<p><code>getInstanceData(instanceId)</code></p>
+<p>Returns data about the instance identified by the instanceId passed as parameter. Remember that the instanceId of a specific istance of your game is passed as part of almost any Xtribe message received and sent by your manager and client, during that instance lifetime.</p>
+<p><code>logToMonitor(obj)</code></p>
+<p>Logs to the Debug Monitor, directly from your manager.</p>
+<p><code>prettyJson(obj)</code></p>
+<p>Format an object in a readable JSON format.</p>
 <p><code>userError(errorString)</code></p>
 <p>Stops execution and sends back a user error</p>
 <p><code>nothingFound()</code> </p>
@@ -1069,12 +1101,20 @@ Please refer to <a href="#managerapi">Manager API</a> section for details about 
 <p>Stops execution and sends back an &lsquo;null object&rsquo; error if the object is strictly null</p>
 <p><code>isEmpty(obj)</code></p>
 <p>Checks if an object is empty (returns true or false)</p>
-<p><code>prettyJson(obj)</code></p>
-<p>Format an object in a readable JSON</p>
 <p><code>tryWaterfall(functions, callback)</code></p>
-<p>Utility function similar to async.waterfall, with exception handling. Runs the tasks array of functions in series, each passing their results to the next in the array. However, if any of the tasks pass an error to their own callback, the next function is not executed, and the main callback is immediately called with the error. (See <a href="https://github.com/caolan/async">Async</a>) This useful library is included in etsman and exported as etsman.async, so you can use for example etsman.async.each(arr, iteratee, [callback])<br />
-<a name="extlib"><a/></p>
-<h1 id="external-libraries-exposed"><a name="user-content-external-libraries-exposed" href="#external-libraries-exposed" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>External libraries exposed</h1>
+<p>Utility function similar to async.waterfall, with exception handling. Runs the tasks array of functions in series, each passing their results to the next in the array. However, if any of the tasks pass an error to their own callback, the next function is not executed, and the main callback is immediately called with the error. (See <a href="https://github.com/caolan/async">Async</a>) This useful library is included in etsman and exported as etsman.async, so you can use for example etsman.async.each(arr, iteratee, [callback])</p>
+<p><code>intersectSafe(a, b, count_empty_as_full)</code></p>
+<p>Calculate intersection between two array a and b leaving them untouched, and returns the resulting array. If count_empty_as_full is set to true, the intersection of a filled array with an empty array returns the filled.</p>
+<p><code>currentTimestamp()</code></p>
+<p>Return the current timestamp in Unix Time format (number of milliseconds elapsed since 1 January 1970 00:00:00 UTC). (See <a href="https://en.wikipedia.org/wiki/Unix_time">Unix Time</a>)</p>
+<p><code>connectToMysqlDb(host,database,user,password)</code></p>
+<p>Connects to a mysql database. Accepts as parameters:<br />
+host: The hostname of the database you are connecting to (&lsquo;localhost&rsquo; if on your machine)<br />
+database: Name of the database to use for this connection<br />
+user: The MySQL user to authenticate as<br />
+password: The password of that MySQL user</p>
+<p><a name="extlib"><a/></p>
+<h1 id="external-libraries-exported"><a name="user-content-external-libraries-exported" href="#external-libraries-exported" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>External libraries exported</h1>
 <p>Our library export some useful third-party libraries, so you don&rsquo;t have to include them again.</p>
 <p><code>async</code><br />
 The useful library async (<a href="https://github.com/caolan/async">Async</a>) which provides straight-forward, powerful functions for working with asynchronous JavaScript)</p>
