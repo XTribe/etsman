@@ -1016,8 +1016,8 @@ body .markdown-body
 }
 </style><title>README</title></head><body><article class="markdown-body"><h1 id="xtribe-manager-api"><a name="user-content-xtribe-manager-api" href="#xtribe-manager-api" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Xtribe Manager API</h1>
 <p>Welcome to Xtribe Games Manager API! This library can be included in your own Xtribe Game Manager or in a brand new one. It provides a set of useful tools to enhance creating experiments experience. If you already wrote a node.js manager for your game jump to <a href="#includeapi">Include Manager API in your project</a> section, otherwise follow our <a href="#quickstart">Quick Start</a> guide. Please refer to <a href="#managerapi">Manager API</a> section for details about utilities provided by this library.</p>
-<p>Feel free to propose corrections, changes or to request feature that you would find useful.<br />
-<a name="quickstart"><a/></p>
+<p>Feel free to propose corrections, changes or to request feature that you would find useful.</p>
+<p><a name="quickstart"><a/></p>
 <h1 id="quick-start"><a name="user-content-quick-start" href="#quick-start" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Quick Start</h1>
 <ul>
 <li>Make sure to have a recent version of <a href="https://nodejs.org/">node.js</a> installed.</li>
@@ -1039,14 +1039,8 @@ to install required libraries. This will create a &lsquo;node_modules&rsquo; dir
 <p><code>npm install etsman</code> </p>
 <p>and do not forget to include it in your main js file </p>
 <p><code>var etsman = require('etsman');</code>.<br />
-Please refer to <a href="#managerapi">Manager API</a> section for details about utilities available.<br />
-<a name="managerapi"><a/></p>
-<h1 id="manager-api"><a name="user-content-manager-api" href="#manager-api" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Manager API</h1>
-<p>You can use any of these methods, exported by the library, for your own use. Remember to check out <strong>examples</strong> directory and take a look to code examples.</p>
-<p>N.B: Your manager will be listening on the URL </p>
-<p><code>http://yourServerAddressOrIp:yourPort/</code></p>
-<p>In the following documentation, we&rsquo;ll assume &lsquo;yourServerAddressOrIp&rsquo; equal to &lsquo;localhost&rsquo; and port to &lsquo;9000&rsquo;, just for simplicity sake. Use your own server address and port for your manager!</p>
-<p><a name="managerapi"><a/></p>
+Please refer to <a href="#managerapi">Manager API</a> section for details about utilities available.</p>
+<p><a name="exampleuse"><a/></p>
 <h1 id="how-to-use-examples-with-my-game-interface-on-xtribe"><a name="user-content-how-to-use-examples-with-my-game-interface-on-xtribe" href="#how-to-use-examples-with-my-game-interface-on-xtribe" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>How to use examples with my game interface on Xtribe?</h1>
 <p>Did you already create your game and user interface on Xtribe, didn&rsquo;t you? Check out our <a href="http://xtribe.eu/node/64#XTribe_tutorial:_your_first_game">tutorial</a> to create your first game on our platform. Follow <a href="http://xtribe.eu/node/64#Publishing_the_game">&lsquo;Publishing the game&rsquo;</a> and <a href="http://xtribe.eu/node/64#User_interface">&lsquo;User Interface&rsquo;</a> paragraphs instructions. It&rsquo;s easy and quick.</p>
 <p>The example managers provided, run as standalone application as you start them:</p>
@@ -1055,6 +1049,12 @@ Please refer to <a href="#managerapi">Manager API</a> section for details about 
 <p><code>http://yourServerAddressOrIp:9001</code></p>
 <p>Copy this url and paste it in &lsquo;Manager URI&rsquo; field in the settings of your game. Now, play your game to see the manager in action. </p>
 <p>Please notice that Xtribe needs to reach your manager so start it on a server that is someway reachable, that is having an url address or a fixed ip (e.g.:http://yourServerAddressOrIp:yourPort/). </p>
+<p><a name="managerapi"><a/></p>
+<h1 id="manager-api"><a name="user-content-manager-api" href="#manager-api" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Manager API</h1>
+<p>You can use any of these methods, exported by the library, for your own use. Remember to check out <strong>examples</strong> directory and take a look to code examples.</p>
+<p>N.B: Your manager will be listening on the URL </p>
+<p><code>http://yourServerAddressOrIp:yourPort/</code></p>
+<p>In the following documentation, we&rsquo;ll assume &lsquo;yourServerAddressOrIp&rsquo; equal to &lsquo;localhost&rsquo; and port to &lsquo;9000&rsquo;, just for simplicity sake. Use your own server address and port for your manager!</p>
 <h1 id="utilities"><a name="user-content-utilities" href="#utilities" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Utilities</h1>
 <p><code>startManager(options)</code></p>
 <p>Launch your manager, listening to Xtribe messages. Accepts parameters by the optional object &lsquo;options&rsquo;, that can contain several custom settings. Any parameter, not explicitly set, will be resolved with default ones.</p>
@@ -1121,15 +1121,15 @@ password: The password of that MySQL user</p>
 <p><code>async</code><br />
 The useful library async (<a href="https://github.com/caolan/async">Async</a>) which provides straight-forward, powerful functions for working with asynchronous JavaScript)</p>
 <p><code>_</code><br />
-The library lodash (<a href="https://lodash.com/">Lodash</a>). Learn how to take the hassle out of working with arrays, numbers, objects and strings) <br />
-<a name="references"><a/></p>
+The library lodash (<a href="https://lodash.com/">Lodash</a>). Learn how to take the hassle out of working with arrays, numbers, objects and strings) </p>
+<p><a name="references"><a/></p>
 <h1 id="references"><a name="user-content-references" href="#references" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>References</h1>
 <p><a href="http://xtribe.eu/">Join the Experimental Tribe!</a></p>
 <p><a href="http://xtribe.eu/en/page/xtribe-devdoc">Xtribe Documentation</a></p>
 <p><a href="https://github.com/XTribe/xtribe_games_manager_framework">Xtribe Games Manager Framework</a></p>
 <p><a href="https://github.com/XTribe/xtribe_manager_api">Xtribe Games Manager API</a></p>
-<p><a href="mailto:xtribe.eu@gmail.com">Contact us</a><br />
-<a name="troubleshooting"><a/></p>
+<p><a href="mailto:xtribe.eu@gmail.com">Contact us</a></p>
+<p><a name="troubleshooting"><a/></p>
 <h1 id="troubleshooting"><a name="user-content-troubleshooting" href="#troubleshooting" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Troubleshooting</h1>
 <ul>
 <li><em>When I run my manager, this error is shown.</em></li>

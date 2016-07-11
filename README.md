@@ -3,6 +3,7 @@
 Welcome to Xtribe Games Manager API! This library can be included in your own Xtribe Game Manager or in a brand new one. It provides a set of useful tools to enhance creating experiments experience. If you already wrote a node.js manager for your game jump to [Include Manager API in your project](#includeapi) section, otherwise follow our [Quick Start](#quickstart) guide. Please refer to [Manager API](#managerapi) section for details about utilities provided by this library.
 
 Feel free to propose corrections, changes or to request feature that you would find useful.
+
 <a name="quickstart"><a/>
 #Quick Start
 - Make sure to have a recent version of [node.js](https://nodejs.org/) installed.
@@ -28,18 +29,8 @@ and do not forget to include it in your main js file
 
 `var etsman = require('etsman');`.
 Please refer to [Manager API](#managerapi) section for details about utilities available.
-<a name="managerapi"><a/>
-#Manager API
 
-You can use any of these methods, exported by the library, for your own use. Remember to check out **examples** directory and take a look to code examples.
-
-N.B: Your manager will be listening on the URL 
-
-`http://yourServerAddressOrIp:yourPort/`
-
-In the following documentation, we'll assume 'yourServerAddressOrIp' equal to 'localhost' and port to '9000', just for simplicity sake. Use your own server address and port for your manager!
-
-<a name="managerapi"><a/>
+<a name="exampleuse"><a/>
 #How to use examples with my game interface on Xtribe?
 Did you already create your game and user interface on Xtribe, didn't you? Check out our [tutorial](http://xtribe.eu/node/64#XTribe_tutorial:_your_first_game) to create your first game on our platform. Follow ['Publishing the game'](http://xtribe.eu/node/64#Publishing_the_game) and ['User Interface'](http://xtribe.eu/node/64#User_interface) paragraphs instructions. It's easy and quick.
 
@@ -54,6 +45,16 @@ Every example starts on port 9000+example number (e.g.: 9001 for example 1, 9002
 Copy this url and paste it in 'Manager URI' field in the settings of your game. Now, play your game to see the manager in action. 
 
 Please notice that Xtribe needs to reach your manager so start it on a server that is someway reachable, that is having an url address or a fixed ip (e.g.:http://yourServerAddressOrIp:yourPort/). 
+
+<a name="managerapi"><a/>
+#Manager API
+You can use any of these methods, exported by the library, for your own use. Remember to check out **examples** directory and take a look to code examples.
+
+N.B: Your manager will be listening on the URL 
+
+`http://yourServerAddressOrIp:yourPort/`
+
+In the following documentation, we'll assume 'yourServerAddressOrIp' equal to 'localhost' and port to '9000', just for simplicity sake. Use your own server address and port for your manager!
 
 #Utilities
 `startManager(options)`
@@ -152,6 +153,7 @@ The useful library async ([Async](https://github.com/caolan/async)) which provid
 
 `_`
 The library lodash ([Lodash](https://lodash.com/)). Learn how to take the hassle out of working with arrays, numbers, objects and strings) 
+
 <a name="references"><a/>
 #References
 [Join the Experimental Tribe!](http://xtribe.eu/)
@@ -163,6 +165,7 @@ The library lodash ([Lodash](https://lodash.com/)). Learn how to take the hassle
 [Xtribe Games Manager API](https://github.com/XTribe/xtribe_manager_api)
 
 [Contact us](mailto:xtribe.eu@gmail.com)
+
 <a name="troubleshooting"><a/>
 #Troubleshooting
 - *When I run my manager, this error is shown.*
