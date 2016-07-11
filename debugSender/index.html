@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Manager Test Utility</title>
+
+<style type="text/css">
+body{
+	background-color: #404041;
+    color: #fff;
+    margin: 0px !important;
+    font-family: "Ubuntu Mono", Courier, monospace;
+}
+label {
+	display: block;
+	margin-bottom: 15px;
+	margin-top: 15px;
+
+}
+#header{
+	background: url("img/logo.png") center no-repeat #8aaf45;
+	height: 40px;
+	background-size: contain;
+}
+#sender{
+	margin: 8px !important;
+}
+input[type="submit"] {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+</style>
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#testForm").submit(function(event) {
+			event.preventDefault();
+			$("#error").html('');
+			
+			var params = {};
+			var par_tmp =$("#params").val().trim();
+			if (par_tmp.charAt(0)!='{') {
+				par_tmp='{'+par_tmp+'}';
+			};
+			try {
+				params = JSON.parse(par_tmp);
+			} catch (ex) {
+				$("#error").html('Params parse error: '+ex);
+			}
+
+			
+			var url = window.location.protocol + "//" + window.location.host;
+			var msg = {
+				'sender' : $( "#sender option:selected" ).text(),
+				'topic' : $("#topic").val(),
+				'params' : params,
+				'clientId' : $("#clientId").val(),
+				'instanceId' : $("#instanceId").val()
+			};
+
+			$.post(url, {
+				'message' : JSON.stringify(msg)
+			}, function(data) {
+				$("#response").text(JSON.stringify(data, null, "\t"));
+			}, 'json').fail(function(xhr, textStatus, errorThrown) {		
+				$("#error_response").html('Error in sending message to manager! '+xhr.responseText+' ');
+			});
+
+			return false;
+		});
+
+	});
+</script>
+</head>
+<body>
+<form id="testForm">
+	<div id="header">
+	</div>
+	<div id="sender">
+		<div id="welcome_msg">
+		Welcome to Xtribe Debug Sender! Debug Sender allows you to send messages directly to your manager to debug it.<br><br>
+		Fill data, push the button 'Send Message' and the reply (if any) will be showed on the bottom of the page.<br><br>
+		</div>
+	    <hr>
+		<label>Sender:</label>
+		<select id="sender">
+			<option selected="selected">client</option>
+			<option>system</option>
+		</select>
+		
+		<label>InstanceId: (integer)</label>
+		<input type="text" id="instanceId" value="1200">
+		
+		<label>ClientId: (hex)</label>
+		<input type="text" id="clientId" value="43e5d2f2ca65">
+		
+		<label>Topic:</label>
+		<input type="text" id="topic" value="ready">
+		
+		<label>Params: (json)</label>
+		<textarea rows="15" cols="100" id="params">
+{ 
+	"data": 
+	{ 
+		"created": "09-12-2015",
+		"timezone": "Europe/Rome",
+		"birth_date": null,
+		"spoken_languages": ["English", "Italian"],
+		"sex": null,
+		"education": "None",
+		"country": "it"
+	} 
+} 
+		</textarea>
+		
+		<br>
+		<div id='error'></div>
+		
+		<input type="submit" value="Send Message">
+		
+
+	</form>
+	<hr>
+	<label>Response</label>
+	<div id='error_response'></div>
+	<div id="response" style="white-space: pre-wrap;"></div>
+</div>
+
+</body>
+</html>

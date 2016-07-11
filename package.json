@@ -1,62 +1,11 @@
 {
-  "_args": [
-    [
-      "etsman@*",
-      "/var/www/xtribe_games_manager_framework"
-    ]
-  ],
-  "_from": "etsman@*",
-  "_id": "etsman@1.1.0",
-  "_inCache": true,
-  "_installable": true,
-  "_location": "/etsman",
-  "_nodeVersion": "5.6.0",
-  "_npmOperationalInternal": {
-    "host": "packages-9-west.internal.npmjs.com",
-    "tmp": "tmp/etsman-1.1.0.tgz_1455549940402_0.044611652847379446"
-  },
-  "_npmUser": {
-    "email": "xtribe.eu@gmail.com",
-    "name": "xtribe"
-  },
-  "_npmVersion": "3.6.0",
-  "_phantomChildren": {},
-  "_requested": {
-    "name": "etsman",
-    "raw": "etsman@*",
-    "rawSpec": "*",
-    "scope": null,
-    "spec": "*",
-    "type": "range"
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_shasum": "0e5e61cb9598dcfaf7db52690b6327e399363318",
-  "_shrinkwrap": null,
-  "_spec": "etsman@*",
-  "_where": "/var/www/xtribe_games_manager_framework",
+  "name": "etsman",
+  "version": "1.2.3",
   "author": {
-    "email": "e.falivene@ilabroma.com",
-    "name": "Elisabetta Falivene"
-  },
-  "dependencies": {
-    "body-parser": "1.15.0",
-    "express": "4.13.4",
-    "fs": "0.0.2"
+    "name": "Elisabetta Falivene",
+    "email": "e.falivene@ilabroma.com"
   },
   "description": "Utilities for a node manager in Xtribe",
-  "devDependencies": {},
-  "directories": {},
-  "dist": {
-    "shasum": "0e5e61cb9598dcfaf7db52690b6327e399363318",
-    "tarball": "http://registry.npmjs.org/etsman/-/etsman-1.1.0.tgz"
-  },
-  "gitHead": "d3039657d5124e435f568df612f3842276dafbde",
-  "keywords": [
-    "ets",
-    "xtribe"
-  ],
   "licenses": [
     {
       "type": "Xtribe",
@@ -64,17 +13,37 @@
     }
   ],
   "main": "etsman.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "xtribe",
+    "ets"
+  ],
+  "dependencies": {
+    "async": "^1.5.2",
+    "body-parser": "1.15.0",
+    "cors": "^2.7.1",
+    "express": "4.13.4",
+    "fs": "0.0.2",
+    "lodash": "^4.5.1",
+    "mysql": "*",
+    "etsmonitor": "*"
+  },
+  "gitHead": "d3039657d5124e435f568df612f3842276dafbde",
+  "_id": "etsman@1.1.0",
+  "_shasum": "0e5e61cb9598dcfaf7db52690b6327e399363318",
+  "_from": "etsman@*",
+  "_npmVersion": "3.6.0",
+  "_nodeVersion": "5.6.0",
+  "_npmUser": {
+    "name": "xtribe",
+    "email": "xtribe.eu@gmail.com"
+  },
   "maintainers": [
     {
       "name": "xtribe",
       "email": "xtribe.eu@gmail.com"
     }
-  ],
-  "name": "etsman",
-  "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "version": "1.1.1"
+  ]
 }
