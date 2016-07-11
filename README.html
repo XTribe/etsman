@@ -1041,21 +1041,20 @@ to install required libraries. This will create a &lsquo;node_modules&rsquo; dir
 <p><code>var etsman = require('etsman');</code>.<br />
 Please refer to <a href="#managerapi">Manager API</a> section for details about utilities available.</p>
 <p><a name="exampleuse"><a/></p>
-<h1 id="how-to-use-examples-with-my-game-interface-on-xtribe"><a name="user-content-how-to-use-examples-with-my-game-interface-on-xtribe" href="#how-to-use-examples-with-my-game-interface-on-xtribe" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>How to use examples with my game interface on Xtribe?</h1>
+<h1 id="using-example-managers-with-your-game-interface-on-xtribe"><a name="user-content-using-example-managers-with-your-game-interface-on-xtribe" href="#using-example-managers-with-your-game-interface-on-xtribe" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Using example managers with your game interface on Xtribe</h1>
 <p>Did you already create your game and user interface on Xtribe, didn&rsquo;t you? Check out our <a href="http://xtribe.eu/node/64#XTribe_tutorial:_your_first_game">tutorial</a> to create your first game on our platform. Follow <a href="http://xtribe.eu/node/64#Publishing_the_game">&lsquo;Publishing the game&rsquo;</a> and <a href="http://xtribe.eu/node/64#User_interface">&lsquo;User Interface&rsquo;</a> paragraphs instructions. It&rsquo;s easy and quick.</p>
 <p>The example managers provided, run as standalone application as you start them:</p>
 <p><code>nodejs example_name.js</code></p>
 <p>Every example starts on port 9000+example number (e.g.: 9001 for example 1, 9002 for example 2), so, if you start one of them on your server, it will be running on an url like:</p>
 <p><code>http://yourServerAddressOrIp:9001</code></p>
 <p>Copy this url and paste it in &lsquo;Manager URI&rsquo; field in the settings of your game. Now, play your game to see the manager in action. </p>
-<p>Please notice that Xtribe needs to reach your manager so start it on a server that is someway reachable, that is having an url address or a fixed ip (e.g.:http://yourServerAddressOrIp:yourPort/). </p>
+<p>Please notice that Xtribe needs to reach your manager, so make sure to start it on a server that is someway reachable, that is having an url address or a fixed ip (e.g.:http://yourServerAddressOrIp:yourPort/). </p>
 <p><a name="managerapi"><a/></p>
 <h1 id="manager-api"><a name="user-content-manager-api" href="#manager-api" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Manager API</h1>
 <p>You can use any of these methods, exported by the library, for your own use. Remember to check out <strong>examples</strong> directory and take a look to code examples.</p>
 <p>N.B: Your manager will be listening on the URL </p>
 <p><code>http://yourServerAddressOrIp:yourPort/</code></p>
 <p>In the following documentation, we&rsquo;ll assume &lsquo;yourServerAddressOrIp&rsquo; equal to &lsquo;localhost&rsquo; and port to &lsquo;9000&rsquo;, just for simplicity sake. Use your own server address and port for your manager!</p>
-<h1 id="utilities"><a name="user-content-utilities" href="#utilities" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Utilities</h1>
 <p><code>startManager(options)</code></p>
 <p>Launch your manager, listening to Xtribe messages. Accepts parameters by the optional object &lsquo;options&rsquo;, that can contain several custom settings. Any parameter, not explicitly set, will be resolved with default ones.</p>
 <ul>
@@ -1110,11 +1109,13 @@ Please refer to <a href="#managerapi">Manager API</a> section for details about 
 <p><code>currentTimestamp()</code></p>
 <p>Return the current timestamp in Unix Time format (number of milliseconds elapsed since 1 January 1970 00:00:00 UTC). (See <a href="https://en.wikipedia.org/wiki/Unix_time">Unix Time</a>)</p>
 <p><code>connectToMysqlDb(host,database,user,password)</code></p>
-<p>Connects to a mysql database. Accepts as parameters:<br />
-host: The hostname of the database you are connecting to (&lsquo;localhost&rsquo; if on your machine)<br />
-database: Name of the database to use for this connection<br />
-user: The MySQL user to authenticate as<br />
-password: The password of that MySQL user</p>
+<p>Connects to a mysql database. Accepts as parameters:</p>
+<ul>
+<li>host: The hostname of the database you are connecting to (&lsquo;localhost&rsquo; if on your machine)</li>
+<li>database: Name of the database to use for this connection</li>
+<li>user: The MySQL user to authenticate as</li>
+<li>password: The password of that MySQL user</li>
+</ul>
 <p><a name="extlib"><a/></p>
 <h1 id="external-libraries-exported"><a name="user-content-external-libraries-exported" href="#external-libraries-exported" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>External libraries exported</h1>
 <p>Our library export some useful third-party libraries, so you don&rsquo;t have to include them again.</p>

@@ -31,7 +31,7 @@ and do not forget to include it in your main js file
 Please refer to [Manager API](#managerapi) section for details about utilities available.
 
 <a name="exampleuse"><a/>
-#How to use examples with my game interface on Xtribe?
+#Using example managers with your game interface on Xtribe
 Did you already create your game and user interface on Xtribe, didn't you? Check out our [tutorial](http://xtribe.eu/node/64#XTribe_tutorial:_your_first_game) to create your first game on our platform. Follow ['Publishing the game'](http://xtribe.eu/node/64#Publishing_the_game) and ['User Interface'](http://xtribe.eu/node/64#User_interface) paragraphs instructions. It's easy and quick.
 
 The example managers provided, run as standalone application as you start them:
@@ -44,7 +44,7 @@ Every example starts on port 9000+example number (e.g.: 9001 for example 1, 9002
 
 Copy this url and paste it in 'Manager URI' field in the settings of your game. Now, play your game to see the manager in action. 
 
-Please notice that Xtribe needs to reach your manager so start it on a server that is someway reachable, that is having an url address or a fixed ip (e.g.:http://yourServerAddressOrIp:yourPort/). 
+Please notice that Xtribe needs to reach your manager, so make sure to start it on a server that is someway reachable, that is having an url address or a fixed ip (e.g.:http://yourServerAddressOrIp:yourPort/). 
 
 <a name="managerapi"><a/>
 #Manager API
@@ -56,7 +56,6 @@ N.B: Your manager will be listening on the URL
 
 In the following documentation, we'll assume 'yourServerAddressOrIp' equal to 'localhost' and port to '9000', just for simplicity sake. Use your own server address and port for your manager!
 
-#Utilities
 `startManager(options)`
 
 Launch your manager, listening to Xtribe messages. Accepts parameters by the optional object 'options', that can contain several custom settings. Any parameter, not explicitly set, will be resolved with default ones.
@@ -139,10 +138,11 @@ Return the current timestamp in Unix Time format (number of milliseconds elapsed
 `connectToMysqlDb(host,database,user,password)`
 
 Connects to a mysql database. Accepts as parameters:
-host: The hostname of the database you are connecting to ('localhost' if on your machine)
-database: Name of the database to use for this connection
-user: The MySQL user to authenticate as
-password: The password of that MySQL user
+
+- host: The hostname of the database you are connecting to ('localhost' if on your machine)
+- database: Name of the database to use for this connection
+- user: The MySQL user to authenticate as
+- password: The password of that MySQL user
 
 <a name="extlib"><a/>
 #External libraries exported
